@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import Layout from '../layout';
-import AdList from '../components/AdList';
 import UserCard from '../components/UserCard';
 import PointsCard from '../components/PointsCard';
 import Search from '../components/Search';
+import Tabs from '../components/Tabs'; // Импортируем новый компонент вкладок
+import TabContent from '../components/TabContent'; // Импортируем новый компонент для контента вкладок
 
 export default function Home() {
   const user = {
@@ -44,47 +45,17 @@ export default function Home() {
           <Search />
         </div>
 
-        {/* Вкладки для переключения */}
-        <div className="flex space-x-4 mb-6">
-          <button
-            className={`px-4 py-2 ${activeTab === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-            onClick={() => setActiveTab('all')}
-          >
-            Все объявления
-          </button>
-          <button
-            className={`px-4 py-2 ${activeTab === 'favorites' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-            onClick={() => setActiveTab('favorites')}
-          >
-            Избранное
-          </button>
-        </div>
+        {/* Используем компонент вкладок */}
+        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <div className="min-h-screen p-6 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="col-span-3">
-            {/* Отображение объявлений в зависимости от активной вкладки */}
-            {activeTab === 'all' ? (
-              <>
-                <h2 className="text-2xl font-bold">Все объявления</h2>
-                <AdList
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
-                />
-              </>
-            ) : (
-              <>
-                <h2 className="text-2xl font-bold">Избранное</h2>
-                {favorites.length > 0 ? (
-                  <AdList
-                    favorites={favorites}
-                    toggleFavorite={toggleFavorite}
-                    onlyFavorites={true} // Флаг для отображения только избранных
-                  />
-                ) : (
-                  <p>Нет избранных объявлений.</p>
-                )}
-              </>
-            )}
+            {/* Используем компонент TabContent для отображения контента вкладок */}
+            <TabContent
+              activeTab={activeTab}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+            />
           </div>
 
           <div className="md:col-span-1">
