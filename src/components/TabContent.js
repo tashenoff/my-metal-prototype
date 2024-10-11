@@ -1,7 +1,7 @@
 // components/TabContent.js
 import AdList from './AdList';
 
-const TabContent = ({ activeTab, favorites, toggleFavorite }) => {
+const TabContent = ({ activeTab, favorites, toggleFavorite, adType }) => {
   return (
     <div>
       {activeTab === 'all' ? (
@@ -10,6 +10,7 @@ const TabContent = ({ activeTab, favorites, toggleFavorite }) => {
           <AdList
             favorites={favorites}
             toggleFavorite={toggleFavorite}
+            adType={adType} // Передаем тип объявления
           />
         </>
       ) : (
@@ -19,7 +20,8 @@ const TabContent = ({ activeTab, favorites, toggleFavorite }) => {
             <AdList
               favorites={favorites}
               toggleFavorite={toggleFavorite}
-              onlyFavorites={true} // Флаг для отображения только избранных
+              onlyFavorites={true}
+              adType={adType} // Передаем тип объявления
             />
           ) : (
             <p>Нет избранных объявлений.</p>

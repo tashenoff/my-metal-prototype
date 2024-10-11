@@ -1,10 +1,11 @@
+// pages/index.js
 import { useState, useEffect } from 'react';
 import Layout from '../layout';
 import UserCard from '../components/UserCard';
 import PointsCard from '../components/PointsCard';
 import Search from '../components/Search';
-import Tabs from '../components/Tabs'; // Импортируем новый компонент вкладок
-import TabContent from '../components/TabContent'; // Импортируем новый компонент для контента вкладок
+import Tabs from '../components/Tabs';
+import TabContent from '../components/TabContent';
 
 export default function Home() {
   const user = {
@@ -15,15 +16,14 @@ export default function Home() {
   };
 
   const [favorites, setFavorites] = useState([]);
-  const [activeTab, setActiveTab] = useState('all'); // Состояние для отслеживания активной вкладки
+  const [activeTab, setActiveTab] = useState('all');
+  const [adType, setAdType] = useState(''); // Состояние для типа объявления
 
-  // Загрузка избранных объявлений из localStorage
   useEffect(() => {
     const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
     setFavorites(savedFavorites);
   }, []);
 
-  // Обновление localStorage при изменении избранного
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
@@ -31,11 +31,16 @@ export default function Home() {
   const toggleFavorite = (id) => {
     setFavorites((prev) => {
       if (prev.includes(id)) {
-        return prev.filter(favId => favId !== id); // Удаляем из избранного
+        return prev.filter(favId => favId !== id);
       } else {
-        return [...prev, id]; // Добавляем в избранное
+        return [...prev, id];
       }
     });
+  };
+
+  // Обработчик изменения типа объявления
+  const handleTypeChange = (event) => {
+    setAdType(event.target.value);
   };
 
   return (
@@ -45,16 +50,29 @@ export default function Home() {
           <Search />
         </div>
 
-        {/* Используем компонент вкладок */}
-        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/* Выпадающий список для выбора типа объявления */}
+
+        <div className='flex items-center justify-between'>
+          <div>
+            <label htmlFor="adType">Тип объявления: </label>
+            <select id="adType" value={adType} onChange={handleTypeChange}>
+              <option value="">Все</option>
+              <option value="Тендерная заявка">Тендерная заявка</option>
+              <option value="Прямой закуп">Прямой закуп</option>
+              {/* Добавьте другие типы объявлений по мере необходимости */}
+            </select>
+          </div>
+
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        </div>
 
         <div className="min-h-screen p-6 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="col-span-3">
-            {/* Используем компонент TabContent для отображения контента вкладок */}
             <TabContent
               activeTab={activeTab}
               favorites={favorites}
               toggleFavorite={toggleFavorite}
+              adType={adType} // Передаем выбранный тип объявления в TabContent
             />
           </div>
 

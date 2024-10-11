@@ -4,7 +4,7 @@ import ThemeToggle from '../components/ThemeToggle'; // Импортируем �
 
 const Navbar = () => {
   return (
-    <nav className="bg-blue-600 dark:bg-black p-4">
+    <nav className="bg-blue-600 dark:bg-black py-4">
       <div className="container mx-auto flex justify-between">
         <h1 className="text-white text-xl font-bold">Meta Solid</h1>
         <div className="space-x-4 flex items-center">
