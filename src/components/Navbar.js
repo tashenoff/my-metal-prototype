@@ -17,9 +17,9 @@ const Navbar = () => {
           <Link className="text-white" href="/trader">
            Кабинет трейдера
           </Link>
-          <Link className="text-white" href="/trader">
+          {/* <Link className="text-white" href="/trader">
           Аренда складов
-          </Link>
+          </Link> */}
           <ThemeToggle /> {/* Добавляем переключатель темы */}
         </div>
       </div>
